@@ -10,6 +10,8 @@ import {
   Res,
   HttpStatus,
   UseGuards,
+  Delete,
+  Put,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ProjectsService } from './projects.service';
@@ -38,5 +40,20 @@ export class ProjectsController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.projectsService.createProject(projectDto, file);
+  }
+
+  @Delete('/:id')
+  deleteProject(@Param('id') idProject: string) {
+    return this.projectsService.deleteProject(idProject);
+  }
+
+  @Put('/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  updateProject(
+    @Param('id') idProject: string,
+    @Body() projectDto: ProjectDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.projectsService.updateProject(idProject, projectDto, file);
   }
 }

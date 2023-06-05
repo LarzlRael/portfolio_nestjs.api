@@ -13,6 +13,14 @@ export class ProjectsService {
   ) {}
 
   async createProject(projectDto: ProjectDto, file: Express.Multer.File) {
+    if (!file) {
+      const project = new this.projectsModel(projectDto);
+      try {
+        return await project.save();
+      } catch (error) {
+        console.log(error);
+      }
+    }
     let uploadApiResponse: UploadApiResponse;
 
     const upload = v2.uploader.upload_stream(
@@ -24,6 +32,7 @@ export class ProjectsService {
         const project = new this.projectsModel({
           ...projectDto,
           urlImageProject: uploadApiResponse.url,
+          publicId: uploadApiResponse.public_id,
         });
 
         try {
@@ -45,5 +54,47 @@ export class ProjectsService {
     return await this.projectsModel
       .find({ projectType: { $regex: projectType, $options: 'i' } })
       .limit(5);
+  }
+
+  async deleteProject(idProject: string) {
+    return await this.projectsModel.findByIdAndDelete(idProject);
+  }
+
+  async updateProject(
+    idProject: string,
+    projectDto: ProjectDto,
+    file: Express.Multer.File,
+  ) {
+    const getProject = await this.projectsModel.findById(idProject);
+    if (!getProject) {
+      throw new Error('Project not found');
+    }
+    let uploadApiResponse: UploadApiResponse;
+    if (!file) {
+      /* update object */
+      const project = await this.projectsModel.findByIdAndUpdate(idProject, {
+        ...getProject,
+        ...projectDto,
+      });
+      return project;
+    }
+    /* update object with image */
+    const upload = v2.uploader.upload_stream(
+      { folder: 'portfolio' },
+      async (error, result) => {
+        if (error) console.log(error);
+        await v2.uploader.destroy(getProject.publicId);
+        uploadApiResponse = result;
+        const project = await this.projectsModel.findByIdAndUpdate(idProject, {
+          ...getProject,
+          ...projectDto,
+          urlImageProject: uploadApiResponse.url,
+          publicId: uploadApiResponse.public_id,
+        });
+        return project;
+      },
+    );
+
+    toStream(file.buffer).pipe(upload);
   }
 }

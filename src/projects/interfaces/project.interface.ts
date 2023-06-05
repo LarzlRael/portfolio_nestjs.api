@@ -5,4 +5,5 @@ export interface ProjectModel extends Document {
   urlProject: string;
   urlImageProject: string;
   repositoryUrl: string;
+  publicId: string;
 }

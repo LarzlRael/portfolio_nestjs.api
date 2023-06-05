@@ -19,4 +19,7 @@ export class ProjectDto {
   @IsOptional()
   @IsString()
   repositoryUrl?: string;
+
+  @IsOptional()
+  publicId?: string;
 }
