@@ -9,11 +9,13 @@ import {
   Req,
   Res,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto/projects.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('projects')
 export class ProjectsController {
@@ -28,25 +30,13 @@ export class ProjectsController {
     return this.projectsService.getProjectsByType(type);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/create')
   @UseInterceptors(FileInterceptor('file'))
   createProject(
-    @Req() req: Request,
-    @Res() res: Response,
     @Body() projectDto: ProjectDto,
     @UploadedFile() file: Express.Multer.File,
-  ): Response {
-    if (req.headers['api_key'] === process.env.API_KEY) {
-      this.projectsService.createProject(projectDto, file);
-      return res.status(HttpStatus.OK).json({
-        ok: true,
-        msg: 'New Project created',
-      });
-    } else {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        ok: false,
-        msg: 'The api key was not provided',
-      });
-    }
+  ) {
+    return this.projectsService.createProject(projectDto, file);
   }
 }

@@ -13,8 +13,6 @@ export class ProjectsService {
   ) {}
 
   async createProject(projectDto: ProjectDto, file: Express.Multer.File) {
-    /* console.log(file.path);
-    console.log('file data ' + file); */
     let uploadApiResponse: UploadApiResponse;
 
     const upload = v2.uploader.upload_stream(

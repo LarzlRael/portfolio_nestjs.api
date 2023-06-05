@@ -8,6 +8,7 @@ import { EmailModule } from './email/email.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -21,6 +22,7 @@ import { join } from 'path';
       useNewUrlParser: true,
     }),
     ProjectsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
