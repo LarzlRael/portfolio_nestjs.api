@@ -19,7 +19,7 @@ export class AuthService {
   ): Promise<{ accessToken: string }> {
     const { username, password } = authCredentialDTO;
     const user = await this.userModel.findOne({ username });
-    console.log(user);
+
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JWtPayload = { username: user.username };
       const accessToken = await this.jwtService.sign(payload);
@@ -47,5 +47,11 @@ export class AuthService {
   }
   async getOneUser(username: string): Promise<User> {
     return await this.userModel.findOne({ username });
+  }
+
+  async renewToken(username: string): Promise<{ accessToken: string }> {
+    const payload: JWtPayload = { username };
+    const accessToken = await this.jwtService.sign(payload);
+    return { accessToken };
   }
 }

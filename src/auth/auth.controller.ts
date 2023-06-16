@@ -1,6 +1,9 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialDTO } from './dto/user.dto';
+import { GetUser } from './decorator/getUser.decorator';
+import { User } from './entities/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -13,5 +16,11 @@ export class AuthController {
   @Post('/signin')
   async signIn(@Body() authCredentialDTO: AuthCredentialDTO) {
     return await this.authService.singIn(authCredentialDTO);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/renew')
+  async renewToken(@GetUser() user: User) {
+    return await this.authService.renewToken(user.username);
   }
 }

@@ -42,11 +42,13 @@ export class ProjectsController {
     return this.projectsService.createProject(projectDto, file);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/:id')
   deleteProject(@Param('id') idProject: string) {
     return this.projectsService.deleteProject(idProject);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put('/:id')
   @UseInterceptors(FileInterceptor('file'))
   updateProject(

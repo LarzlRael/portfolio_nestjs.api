@@ -21,5 +21,6 @@ export class ProjectDto {
   repositoryUrl?: string;
 
   @IsOptional()
+  @IsString()
   publicId?: string;
 }
