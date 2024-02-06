@@ -31,6 +31,10 @@ export class ProjectsController {
   getProjectsByType(@Param('type') type) {
     return this.projectsService.getProjectsByType(type);
   }
+  @Get('/get_proyect/:id')
+  getProjectById(@Param('id') type) {
+    return this.projectsService.getProjectById(type);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/create')

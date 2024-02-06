@@ -49,6 +49,9 @@ export class ProjectsService {
   async getAllProjects() {
     return await this.projectsModel.find();
   }
+  async getProjectById(idProject: string) {
+    return await this.projectsModel.findOne({ _id: idProject });
+  }
 
   async getProjectsByType(projectType: string) {
     return await this.projectsModel

@@ -11,9 +11,9 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
+    /* ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
-    }),
+    }), */
     EmailModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
