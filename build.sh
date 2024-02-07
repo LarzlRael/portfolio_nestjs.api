@@ -10,7 +10,7 @@ cd './../portfolio.spa'
 
 #!
 npm run build
-mv -r './dist' "./public"
+mv './dist' "./public"
 
 #!
 
