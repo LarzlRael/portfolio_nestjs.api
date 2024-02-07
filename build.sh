@@ -10,12 +10,12 @@ cd './../portfolio.spa'
 
 #!
 npm run build
-mv './dist' "./public"
+mv './dist' "./public_folder"
 
 #!
 
 rm -r "../$nest_api_dir.api/client"
-cp -r './public' "../$nest_api_dir/"
+cp -r './public_folder' "../$nest_api_dir/"
 
 
 cd "./../$nest_api_dir"
