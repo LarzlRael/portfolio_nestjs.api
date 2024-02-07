@@ -1,5 +1,5 @@
 nest_api_dir="portfolio_nestjs.api"
-
+branche_name="deployRender"
 #!/bin/bash
 cd './../portfolio.spa'
 
@@ -15,7 +15,7 @@ cp -r './dist' "../$nest_api_dir/"
 cd "./../$nest_api_dir"
 
 
-git checkout deploy
+git checkout $deployRender
 git a
 git commit -m "Deploy"
 git push
