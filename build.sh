@@ -1,3 +1,5 @@
+nest_api_dir="portfolio_nestjs.api"
+
 #!/bin/bash
 cd './../portfolio.spa'
 
@@ -6,11 +8,11 @@ npm run build
 
 #!
 
-rm -r '../portfolio_nestjs.api/src/public/dist'
-cp -r './dist' '../portfolio_nestjs.api/src/public/'
+rm -r "../$nest_api_dir.api/client"
+cp -r './dist' "../$nest_api_dir/"
 
 
-cd './../portfolio_nestjs.api'
+cd "./../$nest_api_dir"
 
 
 git checkout deploy
