@@ -6,14 +6,11 @@ import {
   Body,
   UseInterceptors,
   UploadedFile,
-  Req,
-  Res,
-  HttpStatus,
   UseGuards,
   Delete,
   Put,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto/projects.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -24,6 +21,12 @@ export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
   @Get()
+  getPublicProyects() {
+    return this.projectsService.getPublicProyects();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/all_projects')
   getAllProjects() {
     return this.projectsService.getAllProjects();
   }

@@ -7,4 +7,8 @@ export const ProjectSchema = new Schema({
   technologies: String,
   urlImageProject: String,
   repositoryUrl: String,
+  isPublic: {
+    type: Boolean,
+    default: true,
+  },
 });

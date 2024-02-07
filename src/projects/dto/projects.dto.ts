@@ -1,4 +1,10 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsBoolean,
+} from 'class-validator';
 
 enum ProjectType {
   WEB = 'web',
@@ -23,4 +29,7 @@ export class ProjectDto {
   @IsOptional()
   @IsString()
   publicId?: string;
+
+  @IsBoolean()
+  isPublic: boolean;
 }

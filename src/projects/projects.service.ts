@@ -49,13 +49,21 @@ export class ProjectsService {
   async getAllProjects() {
     return await this.projectsModel.find();
   }
+  async getPublicProyects() {
+    return await this.projectsModel.find({
+      isPublic: true,
+    });
+  }
   async getProjectById(idProject: string) {
     return await this.projectsModel.findOne({ _id: idProject });
   }
 
   async getProjectsByType(projectType: string) {
     return await this.projectsModel
-      .find({ projectType: { $regex: projectType, $options: 'i' } })
+      .find({
+        projectType: { $regex: projectType, $options: 'i' },
+        isPublic: true,
+      })
       .limit(5);
   }
 
@@ -68,6 +76,7 @@ export class ProjectsService {
     projectDto: ProjectDto,
     file: Express.Multer.File,
   ) {
+    console.log(projectDto);
     const getProject = await this.projectsModel.findById(idProject);
     if (!getProject) {
       throw new Error('Project not found');
@@ -75,10 +84,11 @@ export class ProjectsService {
     let uploadApiResponse: UploadApiResponse;
     if (!file) {
       /* update object */
+      console.log(projectDto);
       const project = await this.projectsModel.findByIdAndUpdate(idProject, {
-        ...getProject,
         ...projectDto,
       });
+      console.log(project);
       return project;
     }
     /* update object with image */
