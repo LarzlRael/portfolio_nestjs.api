@@ -1,10 +1,16 @@
+#!/bin/bash
 nest_api_dir="portfolio_nestjs.api"
 branche_name="deployRender"
-#!/bin/bash
+
+current_date_time="`date +%Y%m%d%H%M%S`";
+echo $current_date_time;
+
+
 cd './../portfolio.spa'
 
 #!
 npm run build
+mv -r './dist' "./public"
 
 #!
 
@@ -17,5 +23,5 @@ cd "./../$nest_api_dir"
 
 git checkout $deployRender
 git a
-git commit -m "Deploy"
+git commit -m "$current_date_time Deploy"
 git push
