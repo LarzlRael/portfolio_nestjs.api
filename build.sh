@@ -9,8 +9,9 @@ echo $current_date_time;
 cd './../portfolio.spa'
 
 #!
+rm -r "./public_folder"
 npm run build
-mv -r './dist' "./public_folder"
+mv './dist' "./public_folder"
 
 #!
 
