@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsString,
   IsBoolean,
+  IsArray,
 } from 'class-validator';
 
 enum ProjectType {
@@ -19,12 +20,17 @@ export class ProjectDto {
   @IsString()
   name: string;
   urlProject: string;
-  technologies: string;
+
   urlImageProject: string;
+
+  @IsArray()
+  @IsOptional()
+  technologies: string[];
 
   @IsOptional()
   @IsString()
   repositoryUrl?: string;
+  description: string;
 
   @IsOptional()
   @IsString()
