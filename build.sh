@@ -14,7 +14,7 @@ mv './dist' "./public_folder"
 
 #!
 
-rm -r "../$nest_api_dir.api/client"
+rm -r "../$nest_api_dir.api/public_folder"
 cp -r './public_folder' "../$nest_api_dir/"
 
 
